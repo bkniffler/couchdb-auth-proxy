@@ -59,7 +59,9 @@ export default function couchdbAuthProxy(fn, opts={}) {
 				if (secret) req.headers[token] = sign(n, secret);
 			}
 
-			proxy.web(req, res);
+			proxy.web(req, res, {}, e => {
+			  next(e);
+			});
 		} catch(e) {
 			if (next) next(e);
 			else throw e;
